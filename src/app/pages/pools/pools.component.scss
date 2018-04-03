@@ -1,0 +1,87 @@
+.list-games {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 200px);
+  grid-row-gap: .5em;
+  grid-column-gap: 0.64em;
+  >div.game {
+    height: 200px;
+    min-height: 200px;
+    border: 1px solid #068FC5;
+    div.date-time {
+      height: 45px;
+      line-height: 45px;
+      display: flex;
+      justify-content: space-between;
+      background-color: #068FC5;
+      color: #FFFFFF;
+      border-bottom: 1px dashed #068FC5;
+      input {
+        width: 170px;
+        padding-left: 15px;
+        border: none;
+        color: #FFFFFF;
+        background-color: #068FC5;
+      }
+      span {
+        width: calc(100% - 170px);
+        text-align: right;
+        padding-right: 15px;
+      }
+    }
+    div.actions {
+      height: 45px;
+      padding: 0 15px 15px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      >div.field {
+        height: 100%;
+        text-align: left;
+        select {
+            text-align: center;
+            width: 50px;
+            height: 100%;
+        }
+      }
+      >div.buttons {
+        width: 40%;
+        text-align: right;
+        span {
+          color: #068FC5;
+          float: right;
+          width: 50%;
+          height: 100%;
+          svg {
+            height: 30px;
+            width: 30px;
+          }
+        }
+      }
+    }
+    div.teams {
+      height: 110px;
+      >div {
+        display: flex;
+        justify-content: space-between;
+        height: 50px;
+        padding: 10px 15px;
+        line-height: 30px;
+        input {
+          width: 60px;
+        }
+      }
+    }
+    >div.saved {
+      width: 100%;
+      height: 100%;
+      svg {
+        width: 100%;
+        height: 100%;
+        padding: 60px;
+        color: #068FC5;
+      }
+    }
+  }
+}

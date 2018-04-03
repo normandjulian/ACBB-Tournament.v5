@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6 offset-3 form-cadre">
+      <form [formGroup]="fb_user" (ngSubmit)="authentication()">
+
+        <!--login-->
+        <div class="form-group">
+          <label for="login">Identifiant</label>
+          <input type="text" id="login" class="form-control" name="login" formControlName="login" placeholder="Mary" />
+
+          <div *ngIf="loginCtrl.dirty && loginCtrl.hasError('required')" class="alert alert-danger">
+            L'identifiant est obligatoire.
+          </div>
+        </div>
+
+        <!--login-->
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" class="form-control" name="password" formControlName="password" placeholder="1234"/>
+
+          <div *ngIf="passwordCtrl.dirty && passwordCtrl.hasError('required')" class="alert alert-danger">
+            L'identifiant est obligatoire.
+          </div>
+        </div>
+
+        <div class="text-right">
+          <button type="submit" class="btn btn-warning btn-lg" [disabled]="fb_user.invalid">Connexion</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

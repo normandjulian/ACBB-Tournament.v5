@@ -1,0 +1,183 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import "./theme.scss";
+@import '~ng-pick-datetime/assets/style/picker.min.css';
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+nav {
+  background-color: #28282e;
+  width: 80px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  ul.nav-content {
+    width: 100%;
+    padding: 0;
+    li {
+      height: 80px;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      list-style: none;
+      color: #5c5c6a;
+      padding: 10px;
+      svg {
+        color: white;
+      }
+      &.header-logo {
+        background-color: #ff6908;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+div.page {
+  margin-left: 80px;
+  header {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    background-color: #28282e;
+    div.header-title {
+      width: calc(100% - 80px);
+      h1 {
+        font-family: 'Vollkorn SC', serif;
+        color: #5c5c6a;
+        padding-left: 10px;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        line-height: 2.15em;
+      }
+    }
+  }
+  main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding-top: 15px;
+  }
+}
+
+.modal-content {
+  font-size: .875rem;
+  border-radius: 3px;
+  .modal-body {
+    padding: 0;
+    div.modal-card {
+      div.modal-card-title {
+        width: 100%;
+        padding: 5px 15px;
+        background-color: #068FC5;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        &.delete {
+          background-color: #dc3545;
+        }
+      }
+      div.modal-card-alert {
+        background-color: #dc3545;
+        padding: 2px 15px;
+        color: #ffffff;
+        &.success {
+          height: 50px;
+          background-color: #28a745;
+          padding: 15px;
+        }
+      }
+      div.modal-card-content {
+        border-top: 1px dashed #aebcd2;
+        padding: 15px;
+        .form-group {
+          &.combine {
+            >div {
+              padding-left: 7.5px;
+              padding-right: 7.5px;
+              &:first-of-type {
+                padding-left: 15px;
+              }
+              &:last-of-type {
+                padding-right: 15px;
+              }
+            }
+          }
+        }
+        .jcards {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(auto-fill, 110px);
+          grid-row-gap: .5em;
+          grid-column-gap: 0.64em;
+          .jcard {
+            height: 110px;
+            min-height: 110px;
+            background-color: #aebcd2;
+            &.checked {
+              border: 5px solid #068FC5;
+            }
+            .jcard-header {
+              height: 70px;
+              width: 100%;
+              display: flex;
+              >div {
+                width: 100%;
+                text-align: center;
+                margin: auto;
+                font-size: 1.5em;
+              }
+            }
+            .jcard-footer {
+              height: 40px;
+              width: 100%;
+              >div {
+                width: 100%;
+                text-align: center;
+                margin: auto;
+                font-size: 1.5em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .modal-footer {
+    padding: 5px 15px;
+    div.actions {
+      display: flex;
+      button {
+        cursor: pointer;
+        border: none;
+        padding: 0 5px;
+        color: #068FC5;
+      }
+    }
+    &.delete {
+      div.actions {
+        button {
+          color: #dc3545;
+        }
+      }
+    }
+  }
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.margin-bottom {
+  margin-bottom: 15px;
+}
+
+.fields {
+  margin-bottom: 10px;
+}

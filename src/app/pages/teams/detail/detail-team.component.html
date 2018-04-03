@@ -1,0 +1,103 @@
+<div *ngIf="team">
+  <form [formGroup]="fg_team" (ngSubmit)="save()" novalidate>
+    <div class="page-title justify-content-between">
+      <h1>{{fg_team.value.name}}</h1>
+      <div>
+        <button type="button" class="btn btn-outline-danger" (click)="remove_team()">
+          <i class="far fa-trash-alt"></i>
+        </button>
+        <button type="submit" class="btn btn-outline-dark" [disabled]="fg_team.invalid">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="row form-group fields siblings">
+      <div class="col">
+        <label for="club">Club</label>
+        <select class="form-control" id="club" formControlName="club_id">
+          <option value="">Club</option>
+          <option [value]="c._id" *ngFor="let c of clubs">{{c.name}}</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <label for="category">Category</label>
+        <select id="category" class="form-control" formControlName="category_id" [class.is-invalid]="fg_team.get('category_id').hasError('required')">
+          <option value="" disabled>Choisir une category</option>
+          <option *ngFor="let c of categories" [value]="c._id">{{c.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row form-group fields siblings">
+      <div class="col">
+        <label for="coach">Coach</label>
+        <input type="text" id="coach" class="form-control" formControlName="coach" placeholder="Jacques Chie rack" />
+      </div>
+
+      <div class="col">
+        <label for="referee">Arbitre</label>
+        <input type="text" id="referee" class="form-control" formControlName="referee" placeholder="Jacques Langues" />
+      </div>
+    </div>
+
+    <div class="row form-group fields siblings">
+      <div class="col">
+        <label for="division">Division</label>
+        <select id="division" class="form-control" formControlName="division_id" (ngModelChange)="division_change($event)" [class.is-invalid]="fg_team.get('division_id').hasError('required')">
+          <option value="" disabled>Choisir une division</option>
+          <option *ngFor="let d of divisions" [value]="d._id">{{d.name}}</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <label for="difference">Différence</label>
+        <input type="number" id="difference" class="form-control" #diff placeholder="4" disabled/>
+      </div>
+    </div>
+
+    <div class="row form-group fields">
+      <div class="col">
+        <label for="comments">Infos.</label>
+        <textarea class="form-control" id="comments" rows="4" placeholder="Equipe venant de Paris" formControlName="comments">
+        </textarea>
+      </div>
+    </div>
+
+    <div class="alert alert-success" role="alert" *ngIf="message">
+      {{message}}
+    </div>
+  </form>
+
+  <hr/>
+  <div class="page-title justify-content-between">
+    <h1>Les joueurs</h1>
+    <button type="button" class="btn btn-outline-dark" (click)="add_player()">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="row form-group siblings" *ngFor="let p of players; let i=index">
+    <div class="col-12 saved" *ngIf="p.saved">
+      <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+    </div>
+    <div class="col-2" *ngIf="!p.saved">
+      <input type="number" id="difference" class="form-control" placeholder="#" [(ngModel)]="p.number" required/>
+    </div>
+    <div class="col-4" *ngIf="!p.saved">
+      <input type="text" id="difference" class="form-control" placeholder="Prénom" [(ngModel)]="p.firstname" required/>
+    </div>
+    <div class="col-3" *ngIf="!p.saved">
+      <input type="text" id="difference" class="form-control" placeholder="Nom" [(ngModel)]="p.lastname" required/>
+    </div>
+    <div class="col-3 text-right" *ngIf="!p.saved">
+      <button class="btn btn-outline-danger" type="button" (click)="delete_player(p, i)">
+        <i class="far fa-trash-alt"></i>
+      </button>
+      <button class="btn btn-outline-dark" type="button" (click)="save_player(p, i)" [disabled]="!p.number || !p.firstname || !p.lastname">
+        <i class="fas fa-save"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.players-form {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  div {
+    padding: 7.5px;
+    padding-top: 0;
+    // padding-right: 7.5px;
+    width: 35%;
+    &:first-of-type {
+      padding-left: 0; 
+      width: 15%;
+    }
+    &:last-of-type {
+      padding-right: 0;
+      width: 15%;
+    }
+  }
+}
+
+.saved {
+  text-align: center;
+  font-size: 1.3em;
+  color: #28a745;
+}

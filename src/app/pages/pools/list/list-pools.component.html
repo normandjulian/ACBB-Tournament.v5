@@ -1,0 +1,32 @@
+<div class="page-title justify-content-between">
+  <h1>Les poules</h1>
+  <button type="button" class="btn btn-outline-dark" (click)="create_new_pool()">
+    Créer
+  </button>
+</div>
+
+<div class="form-group quick-search">
+  <div class="search-line">
+    <select class="form-control" id="category" (change)="filter_category($event.target.value)">
+      <option value="">Filtrer par categorie</option>
+      <option *ngFor="let c of categories" [value]="c._id">{{c.name}}</option>
+    </select>
+  </div>
+
+</div>
+
+<ul class="list-group left-list ul-header">
+  <li class="list-group-item d-flex align-items-center li-header">
+    <span class="category text-left">Cat.</span>
+    <span class="acronym text-left">Poule</span>
+    <span class="division text-right">Equipes</span>
+  </li>
+</ul>
+
+<ul class="list-group left-list">
+  <li class="list-group-item d-flex align-items-center" *ngFor="let p of pools_filtered" (click)="select_pool(p)" [class.active]="p === pool">
+    <span class="category text-left">{{p.category}}</span>
+    <span class="acronym text-left">{{p.name}}</span>
+    <span class="division text-right">{{p.engaged}}</span>
+  </li>
+</ul>

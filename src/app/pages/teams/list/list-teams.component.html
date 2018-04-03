@@ -1,0 +1,41 @@
+<div class="page-title justify-content-between">
+  <h1>Les équipes</h1>
+  <button type="button" class="btn btn-outline-dark" (click)="create_new_team()">
+    Créer
+  </button>
+</div>
+
+<div *ngIf="teams && teams.length !== 0">
+  <div class="form-group quick-search">
+
+    <div class="search-line">
+      <select class="form-control" id="club" (change)="filter_club($event.target.value)">
+        <option [value]="">Filtrer par club</option>
+        <option *ngFor="let c of clubs" [value]="c._id">{{c.name}}</option>
+      </select>
+    </div>
+
+    <div class="search-line">
+      <select class="form-control" id="category" (change)="filter_category($event.target.value)">
+        <option [value]="">Filtrer par categorie</option>
+        <option *ngFor="let c of categories" [value]="c._id">{{c.name}}</option>
+      </select>
+    </div>
+
+  </div>
+
+  <ul class="list-group left-list ul-header">
+    <li class="list-group-item d-flex align-items-center li-header">
+      <span class="category">Cat.</span>
+      <span class="acronym">Equipe</span>
+      <span class="division">Division</span>
+    </li>
+  </ul>
+  <ul class="list-group left-list">
+    <li class="list-group-item d-flex align-items-center" *ngFor="let t of teams_filtered" (click)="select_team(t)" [class.active]="t === team">
+      <span class="category">{{t.category}}</span>
+      <span class="acronym">{{t.name}}</span>
+      <span class="division">{{t.division}}</span>
+    </li>
+  </ul>
+</div>

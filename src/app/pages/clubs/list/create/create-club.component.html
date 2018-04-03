@@ -1,0 +1,90 @@
+<form [formGroup]="fg_club" (ngSubmit)="save()" novalidate [hidden]="alert_global">
+    <div class="modal-body">
+        <div class="modal-card">
+            <div class="modal-card-title">
+                <span>Création d'un club</span>
+            </div>
+            <div class="modal-card-alert" [hidden]="!alert_club">
+                <i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;
+                <span [innerHTML]="alert_club"></span>
+            </div>
+
+            <div class="modal-card-content">
+
+                <div class="row form-group">
+                    <div class="col-6">
+                        <label for="acronym">Acronyme&nbsp;
+                            <sup>*</sup>
+                        </label>
+                        <input type="text" id="acronym" class="form-control" formControlName="acronym" placeholder="A.C.B.B"  [class.is-invalid]="fg_club.get('acronym').hasError('required')"/>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="name">Name&nbsp;
+                            <sup>*</sup>
+                        </label>
+                        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Belle Beille" [class.is-invalid]="fg_club.get('name').hasError('required')"/>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col">
+                        <label for="color">Couleur&nbsp;
+                            <sup>*</sup>
+                        </label>
+                        <select id="color" class="form-control" formControlName="color" [class.is-invalid]="fg_club.get('color').hasError('required')">
+                            <option value="" disabled>Choisir une couleur</option>
+                            <option *ngFor="let color of colors" [value]="color">{{color}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+
+                    <!-- FileSend -->
+                    <div class="col-12 form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" formControlName="fileSend">Fichier envoyé
+                        </label>
+                    </div>
+
+                    <!-- FileReceived -->
+                    <div class="col-12 form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" formControlName="fileReceived">Fichier reçu
+                        </label>
+                    </div>
+
+                    <!-- Caution -->
+                    <div class="col-12 form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" formControlName="caution">Caution reçu
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col">
+                        <label for="comments">Commentaire</label>
+                        <textarea class="form-control" id="comments" rows="2" placeholder="Equipe venant de Paris" formControlName="comments"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="actions">
+            <button type="submit">Enregistrer</button>
+        </div>
+    </div>
+</form>
+
+<div class="modal-body" [hidden]="!alert_global">
+    <div class="modal-card">
+        <div class="modal-card-alert success">
+            <i class="fa fa-commenting-o" aria-hidden="true"></i>&nbsp;
+            <span [innerHTML]="alert_global"></span>
+        </div>
+    </div>
+</div>

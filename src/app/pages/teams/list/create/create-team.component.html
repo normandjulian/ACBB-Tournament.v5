@@ -1,0 +1,127 @@
+<form [formGroup]="fg_team" (ngSubmit)="save()" novalidate [hidden]="alert_global">
+  <div class="modal-body">
+    <div class="modal-card">
+      <div class="modal-card-title">
+        <span>Création d'une équipe</span>
+      </div>
+      <div class="modal-card-alert" [hidden]="!alert_team">
+        <i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;
+        <span [innerHTML]="alert_team"></span>
+      </div>
+
+      <div class="modal-card-content">
+
+        <div class="row form-group siblings">
+          <div class="col">
+            <label for="club">Club&nbsp;
+              <sup>*</sup>
+            </label>
+            <select class="form-control" id="club" formControlName="club_id" [class.is-invalid]="fg_team.get('club_id').hasError('required')">
+              <option value="" disabled>Choisir un club</option>
+              <option [value]="c._id" *ngFor="let c of clubs">{{c.name}}</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="category">Category&nbsp;
+              <sup>*</sup>
+            </label>
+            <select id="category" class="form-control" formControlName="category_id" [class.is-invalid]="fg_team.get('category_id').hasError('required')">
+              <option value="" disabled>Choisir une categorie</option>
+              <option *ngFor="let c of categories" [value]="c._id">{{c.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col">
+            <label for="coach">Coach</label>
+            <input type="text" id="coach" class="form-control" formControlName="coach" placeholder="Jacques Chie rack" />
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col">
+            <label for="referee">Arbitre</label>
+            <input type="text" id="referee" class="form-control" formControlName="referee" placeholder="Jacques Langues" />
+          </div>
+        </div>
+
+        <div class="row form-group siblings">
+          <div class="col">
+            <label for="division">Division&nbsp;
+              <sup>*</sup>
+            </label>
+            <select id="division" class="form-control" formControlName="division_id" (ngModelChange)="division_change($event)" [class.is-invalid]="fg_team.get('division_id').hasError('required')">
+              <option value="" disabled>Choisir une division</option>
+              <option *ngFor="let d of divisions" [value]="d._id">{{d.name}}</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="difference">Diff.</label>
+            <input type="number" id="difference" class="form-control" #diff placeholder="4" disabled/>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col">
+            <label for="comments">Infos.</label>
+            <textarea class="form-control" id="comments" rows="2" placeholder="Equipe venant de Paris" formControlName="comments">
+            </textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-card">
+      <div class="modal-card-title">
+        <span>Liste des joueurs</span>
+      </div>
+      <div class="modal-card-alert" [hidden]="!alert_player">
+        <i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;
+        <span [innerHTML]="alert_player"></span>
+      </div>
+      <div class="modal-card-content">
+        <div formArrayName="players">
+          <div class="row form-group players-form" *ngFor="let player of fa_players.controls; let i=index" [formGroupName]="i">
+            <div>
+              <input type="number" id="difference" class="form-control" [class.is-invalid]="player.get('number').touched && player.get('number').hasError('required')"
+                placeholder="#" formControlName="number" />
+            </div>
+            <div>
+              <input type="text" id="difference" class="form-control" [class.is-invalid]="player.get('firstname').touched && player.get('firstname').hasError('required')"
+                placeholder="Prénom" formControlName="firstname" />
+            </div>
+            <div>
+              <input type="text" id="difference" class="form-control" [class.is-invalid]="player.get('lastname').touched && player.get('lastname').hasError('required')"
+                placeholder="Nom" formControlName="lastname" />
+            </div>
+            <div class="text-right">
+              <button class="btn btn-block btn-outline-danger" type="button" (click)="fa_players.removeAt(i)">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-block btn-outline-primary" (click)="add_player()" type="button">
+            <i class="fa fa-user-plus"></i>&nbsp;Ajouter un joueur
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="actions">
+      <button type="submit">Enregistrer</button>
+    </div>
+  </div>
+</form>
+
+<div class="modal-body" [hidden]="!alert_global">
+  <div class="modal-card">
+    <div class="modal-card-alert success">
+      <i class="fa fa-commenting-o" aria-hidden="true"></i>&nbsp;
+      <span [innerHTML]="alert_global"></span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- list -->
+        <div class="col-4">
+            <app-list-pools
+                (selected_pool)="selected_pool($event)">
+            </app-list-pools>
+        </div>
+
+        <!-- detail -->
+        <div class="col-8">
+            <app-detail-pool>    
+            </app-detail-pool>
+        </div>
+    </div>
+</div>
