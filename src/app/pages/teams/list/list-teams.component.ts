@@ -1,11 +1,13 @@
-import {TeamSmall} from './../../classes/teams.class';
-import {Club} from './../../classes/clubs.class';
-import {Component} from '@angular/core';
-import {Category} from '../../classes/category.class';
+import { User } from './../../classes/user.class';
+import { TournamentProvider } from './../../../providers/tournament.provider';
+import { TeamSmall } from './../../classes/teams.class';
+import { Club } from './../../classes/clubs.class';
+import { Component } from '@angular/core';
+import { Category } from '../../classes/category.class';
 import * as _ from 'lodash';
-import {CreateTeamModalComponent} from './create/create-team.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {TeamService} from '../services/team.service';
+import { CreateTeamModalComponent } from './create/create-team.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TeamService } from '../services/team.service';
 
 @Component({
   selector: 'app-list-teams',
@@ -13,15 +15,21 @@ import {TeamService} from '../services/team.service';
   styleUrls: ['./../../../app.component.scss', '../teams.component.scss']
 })
 export class ListTeamsComponent {
-  public teams: TeamSmall[];
-  public team: TeamSmall;
-  public categories: Category[];
-  public clubs: Club[];
-  public teams_filtered: TeamSmall[];
+  user: User;
+  teams: TeamSmall[];
+  team: TeamSmall;
+  categories: Category[];
+  clubs: Club[];
+  teams_filtered: TeamSmall[];
   private fClub: string;
   private fCategory: string;
 
-  constructor(private modalCtrl: NgbModal, private service: TeamService) {
+  constructor(
+    private modalCtrl: NgbModal,
+    private service: TeamService,
+    private tournament: TournamentProvider) {
+
+    this.user = { ...this.tournament.user };
     this.clubs = this.service.clubs;
     this.categories = this.service.categories;
 
@@ -43,12 +51,12 @@ export class ListTeamsComponent {
       });
   }
 
-  public filter_club(club_id: string) {
+  filter_club(club_id: string) {
     this.fClub = club_id;
     this.filter();
   }
 
-  public filter_category(category_id: string) {
+  filter_category(category_id: string) {
     this.fCategory = category_id;
     this.filter();
   }
@@ -57,11 +65,11 @@ export class ListTeamsComponent {
     let params: any;
 
     if (this.fCategory && this.fClub) {
-      params = {club_id: this.fClub, category_id: this.fCategory};
+      params = { club_id: this.fClub, category_id: this.fCategory };
     } else if (this.fCategory && !this.fClub) {
-      params = {category_id: this.fCategory};
+      params = { category_id: this.fCategory };
     } else if (!this.fCategory && this.fClub) {
-      params = {club_id: this.fClub};
+      params = { club_id: this.fClub };
     } else if (!this.fCategory && !this.fClub) {
       params = {};
     }
@@ -69,11 +77,11 @@ export class ListTeamsComponent {
     this.teams_filtered = _.filter(this.teams, params);
   }
 
-  public select_team(team: TeamSmall) {
+  select_team(team: TeamSmall) {
     this.service.setTeam(team);
   }
 
-  public create_new_team() {
+  create_new_team() {
     const modal = this.modalCtrl.open(CreateTeamModalComponent);
     modal.componentInstance.club_id = this.fClub || null;
     modal.componentInstance.category_id = this.fCategory || null;

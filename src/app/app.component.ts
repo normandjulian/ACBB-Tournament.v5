@@ -1,3 +1,4 @@
+import { User } from './pages/classes/user.class';
 import { TournamentProvider } from './providers/tournament.provider';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,12 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public rights: any;
-  constructor(private provider: TournamentProvider) { }
+  public user: User;
+
+  constructor(
+    private tounament: TournamentProvider) {
+    this.user = this.tounament.user;
+  }
 
   ngOnInit() {
-    this.provider.getUser().subscribe(
-      (response: any) => this.rights = response.rights
+    this.tounament.getUser().subscribe(
+      (response: any) => this.user = response.user
     );
+  }
+
+  logout() {
+    localStorage.clear();
+    window.location.reload();
   }
 }

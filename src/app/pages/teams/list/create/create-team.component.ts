@@ -20,16 +20,16 @@ export class CreateTeamModalComponent implements OnInit {
     @Input() club_id: string;
     @Input() category_id: string;
     @ViewChild('diff') private diff: ElementRef;
-    public clubs: Club[];
-    public divisions: Division[];
-    public categories: Category[];
+    clubs: Club[];
+    divisions: Division[];
+    categories: Category[];
 
-    public alert_team: String = null;
-    public alert_player: String = null;
-    public alert_global: String = null;
+    alert_team: String = null;
+    alert_player: String = null;
+    alert_global: String = null;
 
-    public fg_team: FormGroup;
-    public fa_players: FormArray;
+    fg_team: FormGroup;
+    fa_players: FormArray;
 
     constructor(
         private service: TeamService,
@@ -67,7 +67,7 @@ export class CreateTeamModalComponent implements OnInit {
         });
     }
 
-    public save() {
+    save() {
         if (this.fg_team.invalid) {
             this.notification('team', 3000);
         } else {
@@ -83,7 +83,7 @@ export class CreateTeamModalComponent implements OnInit {
         }
     }
 
-    public add_player() {
+    add_player() {
         if (this.fg_team.controls.players.valid) {
             this.fa_players.push(this.initPlayerCtrl());
         } else {
@@ -91,7 +91,7 @@ export class CreateTeamModalComponent implements OnInit {
         }
     }
 
-    public division_change(division_id: string) {
+    division_change(division_id: string) {
         const diff = _.find(this.divisions, { _id: division_id }).score;
         this.diff.nativeElement.value = diff;
     }

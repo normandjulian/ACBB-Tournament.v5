@@ -1,8 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
+import { User } from './../pages/classes/user.class';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class TournamentProvider {
     private _user: User;
@@ -10,9 +11,16 @@ export class TournamentProvider {
 
     constructor() {}
 
-    setUser(user: User): void {
+    set user(user: User) {
         this._user = user;
-        this.token = user.token;
+    }
+
+    get user(): User {
+        return this._user;
+    }
+
+    setUser(user: User): void {
+        this.user = user;
         this.subject.next(user);
     }
 
@@ -29,15 +37,6 @@ export class TournamentProvider {
     }
 
     get uri(): string {
-        return 'http://127.0.0.1:8080/api';
+        return environment.uri;
     }
-}
-
-class User {
-    _id: string;
-    login: string;
-    firstname: string;
-    lastname: string;
-    rights: any;
-    token: string;
 }

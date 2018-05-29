@@ -11,9 +11,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateTeamModalComponent } from './list/create/create-team.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteTeamModalComponent } from './detail/delete/delete.team.component';
+import { FeaturesGuard } from '../../providers/features-guard.service';
 
 const ROUTES: Routes = [
-    { path: 'teams', component: TeamsComponent }
+    { path: 'teams', component: TeamsComponent, canActivate: [FeaturesGuard] }
 ];
 
 @NgModule({

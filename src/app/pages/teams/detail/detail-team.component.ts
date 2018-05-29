@@ -29,13 +29,13 @@ import { Player } from '../../classes/players.class';
 })
 export class DetailTeamComponent implements AfterViewInit {
   @ViewChild('diff') private diff: ElementRef;
-  public team: Team;
-  public clubs: Club[];
-  public categories: Category[];
-  public divisions: Division[];
-  public fg_team: FormGroup;
-  public players: Player[];
-  public message: String;
+  team: Team;
+  clubs: Club[];
+  categories: Category[];
+  divisions: Division[];
+  fg_team: FormGroup;
+  players: Player[];
+  message: String;
 
   constructor(private service: TeamService,
     private fb: FormBuilder,
@@ -81,20 +81,20 @@ export class DetailTeamComponent implements AfterViewInit {
     );
   }
 
-  public save(): void {
+  save(): void {
     this.service.http_put_team({ ...this.fg_team.value, _id: this.team._id }).subscribe(
       () => this.notification('Equipe mise à jour', 2000)
     );
   }
 
-  public division_change(division_id: String) {
+  division_change(division_id: String) {
     const division: any = _.find(this.divisions, { _id: division_id });
     if (this.diff) {
       this.diff.nativeElement.value = division ? division.score : null;
     }
   }
 
-  public remove_team() {
+  remove_team() {
     const modal = this.modalCtrl.open(DeleteTeamModalComponent);
     modal.componentInstance.team_id = this.team._id;
     modal.result.then(
@@ -110,7 +110,7 @@ export class DetailTeamComponent implements AfterViewInit {
     }, time);
   }
 
-  public save_player(player: Player, index: number): void {
+  save_player(player: Player, index: number): void {
     if (player._id) {
       this.service.http_put_player(player).subscribe(
         (response: Player) => {
@@ -139,7 +139,7 @@ export class DetailTeamComponent implements AfterViewInit {
     }
   }
 
-  public add_player() {
+  add_player() {
     this.players.unshift({
       number: null,
       lastname: null,
@@ -148,7 +148,7 @@ export class DetailTeamComponent implements AfterViewInit {
     });
   }
 
-  public delete_player(player: Player, index: number) {
+  delete_player(player: Player, index: number) {
     if (player._id) {
       this.service.http_delete_player(player._id).subscribe(
         () => {

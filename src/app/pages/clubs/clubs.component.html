@@ -2,20 +2,12 @@
   <div class="row">
     <!--list-->
     <div class="col-4">
-      <app-list-clubs
-        [clubs]="clubs"
-        (selected_club)="set_club($event)"
-        (add_club)="add_club($event)">
-      </app-list-clubs>
+      <app-list-clubs></app-list-clubs>
     </div>
 
     <!--detail-->
     <div class="col-8">
-      <app-detail-club
-        [club]="club"
-        (updated_club)="updated_club($event)"
-        (deleted_club)="deleted_club($event)">
-      </app-detail-club>
+      <app-detail-club></app-detail-club>
     </div>
   </div>
 </div>

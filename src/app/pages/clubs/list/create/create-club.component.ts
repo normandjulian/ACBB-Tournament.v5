@@ -13,16 +13,15 @@ export class CreateClubModalComponent {
     @Input() club_id: string;
     @Input() category_id: string;
 
-    public colors: String[];
-    public alert_club: String = null;
-    public alert_global: String = null;
-
-    public fg_club: FormGroup;
+    colors: String[];
+    alert_club: String = null;
+    alert_global: String = null;
+    fg_club: FormGroup;
 
     constructor(
         private service: ClubService,
         private fb: FormBuilder,
-        private activeModal: NgbActiveModal) {
+        private modal: NgbActiveModal) {
 
         this.colors = this.service.colors;
         this.fg_club = this.fb.group({
@@ -36,7 +35,7 @@ export class CreateClubModalComponent {
         });
     }
 
-    public save() {
+    save() {
         if (this.fg_club.invalid) {
             this.notification('club', 2000);
         } else {
@@ -45,7 +44,7 @@ export class CreateClubModalComponent {
                     this.notification('success', 2000);
 
                     setTimeout(() => {
-                        this.activeModal.close(response);
+                        this.modal.close(response);
                     }, 2100);
                 },
                 (err: any) => console.log(err)

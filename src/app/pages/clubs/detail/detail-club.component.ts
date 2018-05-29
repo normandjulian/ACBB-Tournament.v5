@@ -1,6 +1,8 @@
+import { TournamentProvider } from './../../../providers/tournament.provider';
+import { User } from './../../classes/user.class';
 import { Club } from './../../classes/clubs.class';
 import { ClubService } from './../services/club.service';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeleteClubModalComponent } from './delete/delete-club.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,19 +12,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './detail-club.component.html',
     styleUrls: ['./../../../app.component.scss']
 })
-export class DetailClubComponent implements OnChanges {
-    @Input() club: Club;
-    @Output() updated_club = new EventEmitter<Club>();
-    @Output() deleted_club = new EventEmitter<Club>();
-    public fg_club: FormGroup;
-    public colors: String[];
-    public message: string;
+export class DetailClubComponent implements AfterViewInit {
+    club: Club;
+    fg_club: FormGroup;
+    colors: String[];
+    message: string;
+    user: User;
 
     constructor(
         private fb: FormBuilder,
         private service: ClubService,
+        private tournament: TournamentProvider,
         private modalCtrl: NgbModal) {
 
+        this.user = this.tournament.user;
         this.colors = this.service.colors;
         this.fg_club = this.fb.group({
             acronym: fb.control('', [Validators.required]),
@@ -35,46 +38,44 @@ export class DetailClubComponent implements OnChanges {
         });
     }
 
-    ngOnChanges(chgm: SimpleChanges) {
-        if (chgm.club && chgm.club.currentValue) {
-            this.fg_club.patchValue({
-                acronym: chgm.club.currentValue.acronym,
-                name: chgm.club.currentValue.name,
-                color: chgm.club.currentValue.color,
-                fileSend: chgm.club.currentValue.fileSend,
-                fileReceived: chgm.club.currentValue.fileReceived,
-                caution: chgm.club.currentValue.caution,
-                comments: chgm.club.currentValue.comments
-            });
-        }
-    }
+    ngAfterViewInit() {
+        this.service.getClub().subscribe(
+            (_club: Club) => {
+                this.club = _club;
 
-    public save(): void {
-        const club: Club = this.fg_club.value;
-        club._id = this.club._id;
-        this.update_club(club);
-    }
-
-    private update_club(club: Club) {
-        this.service.http_put_club(club).subscribe(
-            (response: Club) => {
-                this.updated_club.emit(response);
-                this.notification(`Le club : ${response.name} à bien été mise à jour`, 2000);
+                this.fg_club.patchValue({
+                    acronym: _club.acronym,
+                    name: _club.name,
+                    color: _club.color,
+                    fileSend: _club.fileSend,
+                    fileReceived: _club.fileReceived,
+                    caution: _club.caution,
+                    comments: _club.comments
+                });
             }
         );
     }
 
-    public notification(message: string, time: Number): void {
+    save(): void {
+        const club: Club = { ...this.fg_club.value };
+        club._id = this.club._id;
+        this.service.http_put_club(club).subscribe(
+            () => this.notification(`Le club : ${club.name} à bien été mise à jour`, 2000)
+        );
+    }
+
+    notification(message: string, time: Number): void {
         this.message = message;
         setTimeout(() => {
             this.message = null;
         }, time);
     }
 
-    public delete_club() {
+    delete_club() {
         const modalClub = this.modalCtrl.open(DeleteClubModalComponent);
+        modalClub.componentInstance.club_id = this.club._id;
         modalClub.result.then(
-            () => this.deleted_club.emit(this.club),
+            () => console.log('delete club closed'),
             () => console.log('delete club dismiss')
         );
     }

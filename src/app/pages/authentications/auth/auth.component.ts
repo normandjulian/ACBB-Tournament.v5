@@ -32,8 +32,8 @@ export class AuthComponent {
     authentication() {
         this.service.authentication(this.fb_user.value).subscribe(
             (response: any) => {
-                this.provider.setUser(response);
-                this.router.navigate(['/clubs']);
+                this.provider.token = response.token;
+                window.location.reload();
             }
         );
     }

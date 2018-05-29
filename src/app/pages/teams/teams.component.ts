@@ -13,21 +13,21 @@ import * as _ from 'lodash';
     styleUrls: ['./teams.component.html']
 })
 export class TeamsComponent implements OnInit {
-    public teams: TeamSmall[];
-    public team: Team;
+    teams: TeamSmall[];
+    team: Team;
 
-    constructor(private service: TeamService) {
-    }
+    constructor(
+        private service: TeamService) { }
 
     ngOnInit() {
         this.service.http_get_parameters().subscribe();
     }
 
-    public set_team(team: Team) {
+    set_team(team: Team) {
         this.team = team;
     }
 
-    public add_team(team: TeamSmall) {
+    add_team(team: TeamSmall) {
         this.teams.push(team);
     }
 }

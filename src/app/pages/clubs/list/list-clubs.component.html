@@ -1,19 +1,21 @@
 <div class="page-title justify-content-between">
   <h1>Les clubs</h1>
-  <button type="button" class="btn btn-outline-dark" (click)="create_new_club()">
+  <button type="button" class="btn btn-outline-dark" (click)="create_new_club()" *ngIf="user.admin">
     Créer
   </button>
 </div>
 
-<ul class="list-group left-list ul-header">
-  <li class="list-group-item d-flex align-items-center li-header">
+<div *ngIf="clubs && clubs.length !== 0">
+  <ul class="list-group left-list ul-header">
+    <li class="list-group-item d-flex align-items-center li-header">
       <span class="club-acronym">Acronime</span>
       <span class="club-name">Nom</span>
-  </li>
-</ul>
-<ul class="list-group left-list" *ngIf="clubs && clubs.length !== 0">
-  <li class="list-group-item d-flex align-items-center" *ngFor="let c of clubs" (click)="select_club(c)" [class.active]="c === club">
-    <span class="club-acronym">{{c.acronym}}</span>
-    <span class="club-name">{{c.name}}</span>
-  </li>
-</ul>
+    </li>
+  </ul>
+  <ul class="list-group left-list" *ngIf="clubs && clubs.length !== 0">
+    <li class="list-group-item d-flex align-items-center" *ngFor="let c of clubs" (click)="select_club(c)" [class.active]="c === club">
+      <span class="club-acronym">{{c.acronym}}</span>
+      <span class="club-name">{{c.name}}</span>
+    </li>
+  </ul>
+</div>

@@ -16,8 +16,10 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { RankPipe } from '../../pipes/rank.pipe';
+import { FeaturesGuard } from '../../providers/features-guard.service';
+
 const ROUTES: Routes = [
-    { path: 'pools', component: PoolsComponent }
+    { path: 'pools', component: PoolsComponent, canActivate: [FeaturesGuard] }
 ];
 
 @NgModule({

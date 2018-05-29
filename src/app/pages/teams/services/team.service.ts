@@ -27,49 +27,49 @@ export class TeamService {
   constructor(private http: HttpClient) {
   }
 
-  public getTeams(): Observable<TeamSmall[]> {
+  getTeams(): Observable<TeamSmall[]> {
     return this.teams$.asObservable();
   }
 
-  public setTeams(teams: TeamSmall[]) {
+  setTeams(teams: TeamSmall[]) {
     this.teams = [...teams];
     this.teams$.next(this.teams);
   }
 
-  public getTeam(): Observable<TeamSmall> {
+  getTeam(): Observable<TeamSmall> {
     return this.team$.asObservable();
   }
 
-  public setTeam(team: TeamSmall) {
+  setTeam(team: TeamSmall) {
     this.team = team;
     this.team$.next(this.team);
   }
 
-  public get categories(): Category[] {
+  get categories(): Category[] {
     return this._categories;
   }
 
-  public set categories(categories: Category[]) {
+  set categories(categories: Category[]) {
     this._categories = categories;
   }
 
-  public get divisions(): Division[] {
+  get divisions(): Division[] {
     return this._divisions;
   }
 
-  public set divisions(divisions: Division[]) {
+  set divisions(divisions: Division[]) {
     this._divisions = divisions;
   }
 
-  public get clubs(): Club[] {
+  get clubs(): Club[] {
     return this._clubs;
   }
 
-  public set clubs(clubs: Club[]) {
+  set clubs(clubs: Club[]) {
     this._clubs = clubs;
   }
 
-  public http_get_parameters(): Observable<any> {
+  http_get_parameters(): Observable<any> {
     return this.http.get<any>(`${environment.uri}/teams-parameters`)
       .map((response: any) => {
         this.clubs = response.clubs;
@@ -79,15 +79,15 @@ export class TeamService {
       });
   }
 
-  public http_get_teams(): Observable<TeamSmall[]> {
+  http_get_teams(): Observable<TeamSmall[]> {
     return this.http.get<TeamSmall[]>(`${environment.uri}/teams`);
   }
 
-  public http_get_team(team_id: String): Observable<Team> {
+  http_get_team(team_id: String): Observable<Team> {
     return this.http.get<Team>(`${environment.uri}/teams/${team_id}`);
   }
 
-  public http_post_team(team: TeamSmall): Observable<TeamSmall> {
+  http_post_team(team: TeamSmall): Observable<TeamSmall> {
     return this.http.post<TeamSmall>(`${environment.uri}/teams`, team)
       .map((response: TeamSmall) => {
         this.setTeams([...this.teams, response]);
@@ -95,7 +95,7 @@ export class TeamService {
       });
   }
 
-  public http_put_team(team: Team): Observable<any> {
+  http_put_team(team: Team): Observable<any> {
     return this.http.put<Team>(`${environment.uri}/teams/${team._id}`, team)
       .map((response: TeamFull) => {
         const teams: TeamSmall[] = [...this.teams];
@@ -117,7 +117,7 @@ export class TeamService {
       });
   }
 
-  public http_delete_team(team_id: String): Observable<any> {
+  http_delete_team(team_id: String): Observable<any> {
     return this.http.delete<any>(`${environment.uri}/teams/${team_id}`)
       .delay(1500)
       .map(() => {
@@ -128,15 +128,15 @@ export class TeamService {
   }
 
   /** PLAYERS */
-  public http_post_player(player: Player): Observable<Player> {
+  http_post_player(player: Player): Observable<Player> {
     return this.http.post<Player>(`${environment.uri}/players`, player);
   }
 
-  public http_put_player(player: Player): Observable<Player> {
+  http_put_player(player: Player): Observable<Player> {
     return this.http.put<Player>(`${environment.uri}/players/${player._id}`, player);
   }
 
-  public http_delete_player(player_id: String): Observable<any> {
+  http_delete_player(player_id: String): Observable<any> {
     return this.http.delete<any>(`${environment.uri}/players/${player_id}`);
   }
 }

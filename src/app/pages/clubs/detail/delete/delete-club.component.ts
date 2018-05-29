@@ -10,7 +10,13 @@ import { ClubService } from './../../services/club.service';
     templateUrl: './delete-club.component.html'
 })
 export class DeleteClubModalComponent {
+    @Input() club_id: string;
     constructor(
-        public activeModal: NgbActiveModal) {
+        private service: ClubService,
+        public modal: NgbActiveModal) {
+    }
+
+    delete_club() {
+        this.service.http_delete_club(this.club_id).subscribe(() => this.modal.close());
     }
 }
